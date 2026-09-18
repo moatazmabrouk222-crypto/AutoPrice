@@ -5,7 +5,7 @@ from train import train_model
 import streamlit as st
 
 st.set_page_config(
-    page_title="AutoPrice AI",
+    page_title="AutoPrice",
     page_icon="🚗",
     layout="wide"
 )
@@ -34,7 +34,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🚗 AutoPrice AI")
+st.title("🚗 AutoPrice")
 st.caption("Machine Learning web app for automobile price prediction")
 
 # The model is trained automatically on first launch if it does not exist.
