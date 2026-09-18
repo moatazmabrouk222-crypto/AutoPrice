@@ -199,7 +199,7 @@ with tab_predict:
     with st.form("prediction_form"):
         st.markdown("#### 1 · Vehicle identity")
         c1, c2, c3 = st.columns(3)
-        identity_fields = ["make", "fuel-type", "body-style", "drive-wheels", "engine-location", "num-of-doors"]
+        identity_fields = ["make", "fuel-type", "aspiration", "body-style", "drive-wheels", "engine-location", "num-of-doors"]
         identity_cols = [c1, c2, c3]
         for i, col in enumerate(identity_fields):
             if col not in features:
@@ -257,7 +257,14 @@ with tab_predict:
         submitted = st.form_submit_button("Estimate Automobile Price", type="primary", use_container_width=True)
 
     if submitted:
+        # Align the submitted form exactly with the columns used during training.
+        # This prevents ColumnTransformer "columns are missing" errors.
         X_new = pd.DataFrame([input_data])
+        missing = [col for col in features if col not in X_new.columns]
+        if missing:
+            st.error("Some required vehicle fields are missing: " + ", ".join(missing))
+            st.stop()
+        X_new = X_new[features]
         prediction = float(model.predict(X_new)[0])
         median_price = float(df["price"].median())
 
