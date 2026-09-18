@@ -12,7 +12,6 @@ from xgboost import XGBRegressor
 DATA_PATH = "data/Automobile_data.csv"
 MODEL_PATH = "model/car_price_pipeline.pkl"
 
-
 def train_model():
     df = pd.read_csv(DATA_PATH).replace("?", pd.NA)
 
@@ -21,6 +20,7 @@ def train_model():
         "curb-weight", "engine-size", "bore", "stroke", "compression-ratio",
         "horsepower", "peak-rpm", "city-mpg", "highway-mpg", "price"
     ]
+
     for col in numeric_cols:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")
@@ -76,7 +76,6 @@ def train_model():
         "r2": r2,
         "model_path": MODEL_PATH,
     }
-
 
 if __name__ == "__main__":
     result = train_model()
